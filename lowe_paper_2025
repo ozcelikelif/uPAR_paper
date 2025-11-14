@@ -106,8 +106,8 @@ correlation_data$Var2 <- factor(correlation_data$Var2, levels = ordered_names)
 
 correlation_data <- correlation_data %>%
   mutate(
-    Var1 = recode(Var1, "Mixed_upar." = "uPAR+Mixed", "uparCAF" = "uPAR+CAF", "UPAR.MacroMono" = "uPAR+Myeloid","UPARrelated" = "uPAR+Cycling"),
-    Var2 = recode(Var2, "Mixed_upar." = "uPAR+Mixed", "uparCAF" = "uPAR+CAF", "UPAR.MacroMono" = "uPAR+Myeloid","UPARrelated" = "uPAR+Cycling")
+    Var1 = recode(Var1, "Mixed_upar." = "uPAR+Mixed", "uparCAF" = "uPAR+CAF", "UPAR.MacroMono" = "uPAR+Myeloid","uPAR+Cycling" = "uPAR+Cycling"),
+    Var2 = recode(Var2, "Mixed_upar." = "uPAR+Mixed", "uparCAF" = "uPAR+CAF", "UPAR.MacroMono" = "uPAR+Myeloid","uPAR+Cycling" = "uPAR+Cycling")
   )
 
 ## run this before plotting for the small heatmap ##
