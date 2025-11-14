@@ -67,7 +67,7 @@ colors <- c("Basal_PDAC" = "red",
             "Classical_PDAC" = "orange",
             "uparCAF" = "blue",
             "UPAR+MacroMono"= "green")
-ImageDimPlot(cancer, coord.fixed=T, border.size=NA, axes=F, cols=colors, )
+ImageDimPlot(cancer, coord.fixed=T, border.size=NA, axes=F, cols=colors)
 
 ## correlation heatmap 
 ## after running the distance script you will have a all_final_distance_results.csv file 
@@ -77,15 +77,16 @@ raw_distances <- read.csv("/Users/elif/Desktop/pHD/1st year/Rotations/Lowe Lab/B
 all_final_distance_results <- data.table(raw_distances)
 cell_type_columns <- c("Tcells", "NaiveB", "iCAF", "ActiveB", "Macrophage", 
                        "Tregs", "Endothelial", "VascularSM", "Mast", "Mixed_upar.", 
-                       "Glial", "UPARrelated", "Acinar_fibro", "myCAF", "Islet", 
+                       "Glial", "uPAR+Cycling", "Acinar_fibro", "myCAF", "Islet", 
                        "CircularSM", "Basal_PDAC", "uparCAF", "Glial_fibro", 
                        "Classical_PDAC", "UPAR.MacroMono", "Acinar")
 filtered_cell_type_columns <- c(
-   "UPAR.MacroMono","Mixed_upar.","UPARrelated",
+   "UPAR.MacroMono","Mixed_upar.","uPAR+Cycling",
    "uparCAF", "Basal_PDAC","Classical_PDAC"
 )
 
 final_result <- all_final_distance_results %>% filter(distance == 250)
+
 ## combine Cycling and Classical PDAC
 final_result$target_cell_type <- gsub("Cycling_PDAC", "Classical_PDAC",  final_result$target_cell_type)
 final_result$Classical_PDAC <- final_result$Classical_PDAC + final_result$Cycling_PDAC
@@ -132,7 +133,7 @@ heatmap_plot <- ggplot(correlation_data, aes(Var1, Var2, fill = value)) +
 ## permutation analysis 
 
 final_result <- all_final_distance_results[distance == 250] #select the distance of interest
-final_result$target_cell_type <- gsub("Cycling_PDAC", "Classical_PDAC",  final_result$target_cell_type)
+final_result$target_cell_type <- gsub("Cycling_PDAC", "Classical_PDAC",  final_result$target_cell_type) ## combining classical with cycling since same type
 final_result$Classical_PDAC <- final_result$Classical_PDAC + final_result$Cycling_PDAC
 final_result$Cycling_PDAC <- NULL  #combine cycling PDAC with Classical PDAC
 basal_pdac_cells <- final_result[target_cell_type == "Basal_PDAC"] #select the cell type of interest. 
@@ -220,7 +221,7 @@ cell_type_colors <- c(
     "Mast" = "#002060",          
     "Mixed_upar." = "#0096B1",    
     "Glial" = "#2ECC71",         
-    "UPARrelated" = "#1300FF",  
+    "uPAR+Cycling" = "#1300FF",  
     "Islet" = "#9B59B6",         
     "CircularSM" = "#FF9CEF",     
     "PDAC" = "#E67E22",           
