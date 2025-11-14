@@ -1,4 +1,14 @@
-
+library(Seurat)
+library(ggplot2)
+library(dplyr)
+library(dittoSeq)
+library(ComplexHeatmap)
+library(circlize)
+library(arrow)  
+library(Matrix)
+library(tidyr)
+library(tibble)
+library(RColorBrewer)
 
 seurat_obj <- LoadXenium("/data/lowe/reyesj3/pdac_loh/Xenium/rawdata/20231117__193818__2023-11-17_AF-2693_SNV/output-XETG00065__0011655__Region_3__20231117__193845")
 
