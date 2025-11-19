@@ -4,6 +4,7 @@ library(dplyr)
 library(ggplot2)
 library(UCell)
 library(ggpubr)
+library(ggrepel)
 
 cancer <- readRDS("paper_object.rds")
 
