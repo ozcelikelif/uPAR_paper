@@ -56,6 +56,11 @@ norm_sparse_t <- norm_sparse  %>% t()
 cancer[["RNA_norm"]] <- CreateAssayObject(data = norm_sparse_t)
 DefaultAssay(cancer) <- "RNA_norm"
 
+norm_data <- cancer@assays$RNA_norm@data
+norm_data_log <- norm_data
+norm_data_log@x <- log1p(norm_data@x) 
+cancer[["RNA_norm_log"]] <- CreateAssayObject(data = norm_data_log)
+
 cancer <- FindVariableFeatures(cancer)
 cancer <- ScaleData(cancer)
 cancer <- RunPCA(cancer, assay = "RNA_norm", reduction.name = "pca.xenium")
@@ -68,7 +73,7 @@ cancer <- RunUMAP(cancer, assay= "RNA_norm", reduction = "pca.xenium", reduction
 # individually according to their FindAllMarkers results carried back to the main UMAP.
 
 #this is run for the dotplot + added canonical markers 
-markers <- FindAllMarkers(cancer, only.pos = TRUE, min.pct = 0.1, logfc.threshold = 0.25) 
+markers <- FindAllMarkers(cancer, only.pos = TRUE, min.pct = 0.1, logfc.threshold = 0.25, assay="RNA_norm_log") 
 significant <- markers %>% filter(p_val_adj < 0.05) %>% arrange(cluster)
 
 #Figure 1g
